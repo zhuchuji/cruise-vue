@@ -1,5 +1,7 @@
 // toolbar variables in agent-detail.vue
 $toolbar-height: 50px;
+// margin-bottom in agent-detail
+$row-margin-bottom: 20px;
 
 
 @mixin text-align ($align) {
@@ -12,13 +14,3 @@ $toolbar-height: 50px;
   text-overflow: ellipsis;
 }
 
-// container in agent detail
-@mixin status-div ($bg-color, $text-color: #fff) {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 10px 20px;
-  height: 100px;
-  background-color: $bg-color;
-  color: $text-color;
-}

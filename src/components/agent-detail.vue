@@ -21,16 +21,18 @@
       </el-col>
     </el-row>
     <el-row class="row agent" v-for="agent in agents" :key="agent.id">
-      <el-col :span="3" class="system">
-        <img :src="agent.system | getImageUrl"/>
+      <el-col :span="3" :lg="3" class="hidden-md-only">
+        <div class="system">
+          <img :src="agent.system | getImageUrl"/>
+        </div>
       </el-col>
-      <el-col :span="21">
+      <el-col :span="21" :lg="21" :md="24">
         <el-row class="info">
-          <el-col :span="8">
+          <el-col :span="8" :lg="8" :md="9">
             <i class="icon-desktop info-icon"></i>&nbsp;&nbsp;
             <span class="domain">{{ agent.domain }}</span>
           </el-col>
-          <el-col :span="2">
+          <el-col :span="4" :lg="4" :md="3">
             <span class="status" :class="statusBgColor(agent.status)">
               {{ agent.status }}
             </span>
@@ -39,9 +41,11 @@
             <i class="icon-info  info-icon"></i>&nbsp;&nbsp;
             <span>{{ agent.ip }}</span>
           </el-col>
-          <el-col :span="6">
-            <i class="icon-folder  info-icon"></i>&nbsp;&nbsp;
-            <span>{{ agent.path }}</span>
+          <el-col :span="7">
+            <span class="path">
+              <i class="icon-folder  info-icon"></i>&nbsp;&nbsp;
+              <span>{{ agent.path }}</span>
+            </span>
           </el-col>
         </el-row>
         <el-row class="resource">
@@ -99,7 +103,7 @@
             domain: 'bjstdmngr08.thoughtworks.com',
             status: 'idle',
             ip: '192.168.1.102',
-            path: '/var/lib/cruise-agent',
+            path: '/var/lib/cruise-agent/test/practice/game/user/home',
             resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'},
               {id: '3', name: 'Ubuntu'}, {id: '4', name: 'Chrome'}],
             isAddResShow: false
@@ -193,7 +197,7 @@
       getImageUrl (systemName) {
         // @error image url will not work after webpack packaging
         if (process.env.NODE_ENV === 'production') {
-          return `/images/${systemName}.png`
+          return `static/images/${systemName}.png`
         } else {
           return `src/assets/images/${systemName}.png`
         }
@@ -234,14 +238,19 @@
     background-color: #fff;
 
     .system {
-      display: flex;
-      height: 100%;
-      justify-content: center;
-      align-items: center;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
 
       img {
+        vertical-align: middle;
         height: 80px;
       }
+    }
+
+    .info, .resource {
+      padding-left: 10px;
+      padding-right: 10px;
     }
 
     .info {
@@ -277,6 +286,10 @@
 
   .bg-yellow {
     background-color: #ff9a2a;
+  }
+
+  .path {
+    @include text-ellipsis();
   }
 
   .resource {

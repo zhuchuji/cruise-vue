@@ -3,11 +3,11 @@
     <Header></Header>
     <el-row type="flex" justify="center">
       <div class="body">
-        <el-col :span="5" class="nav" :style="setSidebarHeight()">
+        <el-col :span="5" :md="5" :lg="5" class="nav">
   		    <side-nav></side-nav>
           <history></history>
         </el-col>
-        <el-col :span="19" class="content">
+        <el-col :span="19" :md="19" :lg="19" class="content">
           <agent-detail></agent-detail>
         </el-col>
       </div>
@@ -25,15 +25,7 @@
 
   export default {
     name: 'Dashboard',
-    components: { Header, SideNav, AgentDetail, Footer, History },
-
-    methods: {
-      setSidebarHeight () {
-        return {
-          height: (window.screen.availHeight - 120) + 'px'
-        }
-      }
-    }
+    components: { Header, SideNav, AgentDetail, Footer, History }
   }
 </script>
 
@@ -44,17 +36,33 @@
     background-color: #efefef;
   }
 
-  .body {
-    width: 1200px;
+  @media (min-width: 1024px) {
+    .body {
+      width: 1024px;
+    }
+
+    .content {
+      padding: 20px 10px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .body {
+      width: 1200px;
+    }
+
+    .content {
+      padding: 20px;
+    }
   }
 
   .nav {
     padding-top: $body-padding-top;
+    min-height: 600px;
     background-color: #2d4054;
   }
 
 	.content {
-    padding: 20px 0 20px 40px;
 		min-height: 400px;
 	}
 </style>

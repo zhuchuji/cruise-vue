@@ -1,5 +1,5 @@
 <template>
-  <el-row class="row" type="flex" :gutter="30">
+  <el-row class="overview" type="flex">
     <el-col :span="8">
       <div class="build">
         <p class="title">Building</p>
@@ -13,7 +13,7 @@
       </div>
     </el-col>
     <el-col :span="8">
-      <div class="overview">
+      <div class="statistic">
         <el-row>
           <el-col :span="8">
             <div class="type">ALL</div>
@@ -52,6 +52,23 @@
     color: $text-color;
   }
 
+  .overview {
+    margin-bottom: $row-margin-bottom;
+  }
+
+  @media (min-width: 1024px) {
+    .build  {
+      margin-right: 4%;
+    }
+    .idle {
+      margin-left: 4%;
+      margin-right: 4%;
+    }
+    .statistic {
+      margin-left: 4%;
+    }
+  }
+
   .build {
     @include status-div(#ff9a2a);
   }
@@ -60,7 +77,7 @@
     @include status-div(#7fbc39);
   }
 
-  .overview {
+  .statistic {
     @include status-div(#fff, #333);
     @include text-align(center);
   }
