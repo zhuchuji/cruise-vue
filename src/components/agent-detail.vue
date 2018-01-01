@@ -1,37 +1,6 @@
 <template>
   <div class="agent-detail">
-    <el-row class="row" type="flex" :gutter="30">
-      <el-col :span="8">
-        <div class="build">
-          <p class="title">Building</p>
-          <p class="number">3</p>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="idle">
-          <p class="title">Idle</p>
-          <p class="number">5</p>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="overview">
-          <el-row>
-            <el-col :span="8">
-              <div class="type">ALL</div>
-              <div class="num">8</div>
-            </el-col>
-            <el-col :span="8">
-              <div class="type">PHISICAL</div>
-              <div class="num">4</div>
-            </el-col>
-            <el-col :span="8">
-              <div class="type">VIRTUAL</div>
-              <div class="num">4</div>
-            </el-col>
-          </el-row>
-        </div>
-      </el-col>
-    </el-row>
+    <overview></overview>
     <el-row class="row toolbar">
       <el-col :span="8">
         <el-menu class="menu" default-active="1" mode="horizontal">
@@ -42,7 +11,7 @@
       </el-col>
       <el-col :span="5" :offset="1">
         <el-input
-          size="small"
+          size="mini"
           prefix-icon="el-icon-search">
         </el-input>
       </el-col>
@@ -51,34 +20,62 @@
         <i class="icon-th-list"></i>
       </el-col>
     </el-row>
-    <el-row class="row" v-for="agent in agents" :key="agent.id">
-      <el-col :span="4">
+    <el-row class="row agent" v-for="agent in agents" :key="agent.id">
+      <el-col :span="3" class="system">
         <img :src="agent.system | getImageUrl"/>
       </el-col>
-      <el-col :span="20">
-        <el-row>
-          <el-col :span="12">
-            <i class="icon-desktop"></i>
-            <span>{{ agent.domain }}</span>
+      <el-col :span="21">
+        <el-row class="info">
+          <el-col :span="8">
+            <i class="icon-desktop info-icon"></i>&nbsp;&nbsp;
+            <span class="domain">{{ agent.domain }}</span>
           </el-col>
           <el-col :span="2">
-            <span>{{ agent.status }}</span>
+            <span class="status" :class="statusBgColor(agent.status)">
+              {{ agent.status }}
+            </span>
           </el-col>
-          <el-col :span="10">
-            <i class="icon-info"></i>
+          <el-col :span="5">
+            <i class="icon-info  info-icon"></i>&nbsp;&nbsp;
             <span>{{ agent.ip }}</span>
-            <i class="icon-folder"></i>
+          </el-col>
+          <el-col :span="6">
+            <i class="icon-folder  info-icon"></i>&nbsp;&nbsp;
             <span>{{ agent.path }}</span>
           </el-col>
         </el-row>
-        <el-row>
+        <el-row class="resource">
           <el-col :span="20">
-            <i class="icon-plus"></i>
-            <span>firefox<i class="icon-trash"></i></span>
-            <span>firefox<i class="icon-trash"></i></span>
-            <span>firefox<i class="icon-trash"></i></span>
+            <el-popover
+              trigger="manual"
+              v-model="agent.isAddResShow">
+              <div class="add-popover">
+                <i class="icon-close" @click="closeAddResources(agent)"></i>
+                <p class="desc">seperate multiple resource name with commas</p>
+                <div class="input-resources">
+                  <el-input v-model="resources"></el-input>
+                </div>
+                <el-button class="add-resources" size="small"
+                  @click="addResources(agent)">
+                  Add Resources
+                </el-button>
+                <el-button size="small" @click="closeAddResources(agent)">Cancel</el-button>
+              </div>
+              <span slot="reference" class="add" @click="showAddResources(agent)">
+                <i class="icon-plus"></i>
+              </span>
+            </el-popover>
+            <span v-for="(resource, index) in agent.resources" :key="index"
+              class="resource-op">
+              {{ resource.name }}&nbsp;
+              <i class="icon-trash delete" @click="deleteResource(agent, index)"></i>
+            </span>
           </el-col>
           <el-col :span="4">
+            <span class="deny" v-if="agent.status == 'building'">
+              <i class="icon-deny"></i>
+              deny
+            </span>
           </el-col>
         </el-row>
       </el-col>
@@ -87,8 +84,11 @@
 </template>
 
 <script>
+  import Overview from '@/components/agent-detail/overview.vue'
+
   export default {
     name: 'AgentDetail',
+    components: { Overview },
 
     data () {
       return {
@@ -96,103 +96,114 @@
           {
             id: '1',
             system: 'windows',
+            domain: 'bjstdmngr08.thoughtworks.com',
             status: 'idle',
             ip: '192.168.1.102',
-            path: '/var/lib/cruise-agent'
+            path: '/var/lib/cruise-agent',
+            resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'},
+              {id: '3', name: 'Ubuntu'}, {id: '4', name: 'Chrome'}],
+            isAddResShow: false
           },
           {
             id: '2',
             system: 'windows',
-            status: 'idle',
-            ip: '192.168.1.102',
-            path: '/var/lib/cruise-agent'
+            domain: 'bjstdmngr01.thoughtworks.com',
+            status: 'building',
+            ip: '192.168.1.105',
+            path: '/var/lib/cruise-agent',
+            resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'},
+              {id: '3', name: 'Ubuntu'}, {id: '4', name: 'Chrome'}],
+            isAddResShow: false
           },
           {
             id: '3',
-            system: 'windows',
-            status: 'idle',
-            ip: '192.168.1.102',
-            path: '/var/lib/cruise-agent'
+            system: 'ubuntu',
+            domain: 'bjstdmngr10.thoughtworks.com',
+            status: 'building',
+            ip: '192.168.1.112',
+            path: '/var/lib/cruise-agent',
+            resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'}],
+            isAddResShow: false
           },
           {
             id: '4',
-            system: 'windows',
+            system: 'debin',
+            domain: 'bjstdmngr11.thoughtworks.com',
             status: 'idle',
             ip: '192.168.1.102',
-            path: '/var/lib/cruise-agent'
+            path: '/var/lib/cruise-agent',
+            resources: [],
+            isAddResShow: false
           },
           {
             id: '5',
-            system: 'windows',
-            status: 'idle',
+            system: 'cent_os',
+            domain: 'bjstdmngr15.thoughtworks.com',
+            status: 'building',
             ip: '192.168.1.102',
-            path: '/var/lib/cruise-agent'
+            path: '/var/lib/cruise-agent',
+            resources: [{id: '1', name: 'firefox'}, {id: '2', name: 'firefox'}],
+            isAddResShow: false
           },
           {
             id: '6',
-            system: 'windows',
+            system: 'suse',
+            domain: 'bjstdmngr20.thoughtworks.com',
             status: 'idle',
             ip: '192.168.1.102',
-            path: '/var/lib/cruise-agent'
+            path: '/var/lib/cruise-agent',
+            resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'},
+              {id: '3', name: 'Ubuntu'}, {id: '4', name: 'Chrome'}],
+            isAddResShow: false
           }
-        ]
+        ],
+        isAddResShow: false,
+        resources: ''
+      }
+    },
+
+    methods: {
+      statusBgColor (status) {
+        if (status === 'idle') {
+          return 'bg-green'
+        } else if (status === 'building') {
+          return 'bg-yellow'
+        }
+      },
+
+      deleteResource (agent, resourceIndex) {
+        agent.resources.splice(resourceIndex, 1)
+      },
+      showAddResources (agent) {
+        this.resources = ''
+        agent.isAddResShow = true
+      },
+      addResources (agent) {
+        let resources = this.resources.split(',')
+        for (let resource of resources) {
+          agent.resources.push({name: resource.trim()})
+        }
+      },
+      closeAddResources (agent) {
+        agent.isAddResShow = false
       }
     },
 
     filters: {
       getImageUrl (systemName) {
-        return `src/assets/images/${systemName}.png`
+        // @error image url will not work after webpack packaging
+        if (process.env.NODE_ENV === 'production') {
+          return `/images/${systemName}.png`
+        } else {
+          return `src/assets/images/${systemName}.png`
+        }
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  @import "~@/assets/styles/mixins.scss";
   @import "~@/assets/styles/global.scss";
-
-  @mixin status-div ($bg-color, $text-color: #fff) {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px 20px;
-    height: 100px;
-    background-color: $bg-color;
-    color: $text-color;
-  }
-
-  .build {
-    @include status-div(#ff9a2a);
-  }
-
-  .idle {
-    @include status-div(#7fbc39);
-  }
-
-  .overview {
-    @include status-div(#fff, #333);
-    @include text-align(center);
-  }
-
-  .title {
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  .number {
-    font-size: 48px;
-    @include text-align(right);
-  }
-
-  .type {
-    line-height: 40px;
-    font-size: 12px;
-  }
-
-  .num {
-    line-height: 60px;
-    font-size: 28px;
-  }
 
   .row {
     margin-bottom: 20px;
@@ -217,6 +228,117 @@
     padding: 0 20px;
     @include text-align(right);
   }
+
+  .agent {
+    height: 100px;
+    background-color: #fff;
+
+    .system {
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        height: 80px;
+      }
+    }
+
+    .info {
+      margin: 20px 0;
+      line-height: 20px;
+      font-size: 14px;
+
+      & > div {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .info-icon {
+      font-size: 18px;
+      color: #ccc;
+    }
+  }
+
+  .domain {
+    font-weight: bold;
+    color: #00b4cf;
+  }
+
+  .status {
+    padding: 0 10px;
+    color: #fff;
+  }
+
+  .bg-green {
+    background-color: #7fbc39;
+  }
+
+  .bg-yellow {
+    background-color: #ff9a2a;
+  }
+
+  .resource {
+    line-height: 30px;
+  }
+
+  .add {
+    padding: 2px 8px;
+    background-color: #00b4cf;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .add-popover {
+    position: relative;
+    line-height: 40px;
+    width: 400px;
+
+    .icon-close {
+      position: absolute;
+      top: -5px;
+      right: 10px;
+      color: #00b4cf;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .input-resources {
+      margin-bottom: 10px;
+    }
+
+    .add-resources {
+      background-color: #00b4cf;
+    }
+  }
+
+  .icon-plus {
+    vertical-align: middle;
+  }
+
+  .resource-op {
+    margin: 0 10px;
+    padding: 4px 8px;
+    background-color: #efefef;
+  }
+
+  .delete {
+    cursor: pointer;
+  }
+
+  .deny {
+    padding: 4px 8px;
+    background-color: #00b4cf;
+    cursor: pointer;
+  }
+
+  .icon-deny {
+    vertical-align: text-top;
+  }
 </style>
 
 <style lang="scss">
@@ -228,6 +350,22 @@
 
     .el-menu-item.is-active {
       color: #409EFF;
+    }
+
+    .el-input__inner {
+      border-radius: 0;
+      background-color: #efefef;
+    }
+  }
+
+  .add-popover {
+    .el-input__inner {
+      border-radius: 0;
+      color: #00b4cf;
+    }
+
+    .el-button--mini, .el-button--small {
+      border-radius: 0;
     }
   }
 </style>
