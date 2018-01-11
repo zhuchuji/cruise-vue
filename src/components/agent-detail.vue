@@ -1,27 +1,9 @@
 <template>
   <div class="agent-detail">
     <overview></overview>
-    <el-row class="row toolbar">
-      <el-col :span="8">
-        <el-menu class="menu" default-active="1" mode="horizontal">
-          <el-menu-item index="1">All</el-menu-item>
-          <el-menu-item index="2">Physical</el-menu-item>
-          <el-menu-item index="3">Virtual</el-menu-item>
-        </el-menu>
-      </el-col>
-      <el-col :span="5" :offset="1">
-        <el-input
-          size="mini"
-          prefix-icon="el-icon-search">
-        </el-input>
-      </el-col>
-      <el-col class="view" :span="10">
-        <i class="icon-th-card"></i>
-        <i class="icon-th-list"></i>
-      </el-col>
-    </el-row>
+    <toolbar></toolbar>
     <el-row class="row agent" v-for="agent in agents" :key="agent.id">
-      <el-col :span="3" :lg="3" class="hidden-md-only">
+      <el-col :span="3" :lg="3" class="hidden-md-and-down">
         <div class="system">
           <img :src="agent.system | getImageUrl"/>
         </div>
@@ -29,7 +11,7 @@
       <el-col :span="21" :lg="21" :md="24">
         <el-row class="info">
           <el-col :span="8" :lg="8" :md="9">
-            <i class="icon-desktop info-icon"></i>&nbsp;&nbsp;
+            <i class="icon-desktop info-icon"></i>
             <span class="domain">{{ agent.domain }}</span>
           </el-col>
           <el-col :span="4" :lg="4" :md="3">
@@ -38,12 +20,12 @@
             </span>
           </el-col>
           <el-col :span="5">
-            <i class="icon-info  info-icon"></i>&nbsp;&nbsp;
+            <i class="icon-info  info-icon"></i>
             <span>{{ agent.ip }}</span>
           </el-col>
           <el-col :span="7">
             <span class="path">
-              <i class="icon-folder  info-icon"></i>&nbsp;&nbsp;
+              <i class="icon-folder  info-icon"></i>
               <span>{{ agent.path }}</span>
             </span>
           </el-col>
@@ -71,7 +53,7 @@
             </el-popover>
             <span v-for="(resource, index) in agent.resources" :key="index"
               class="resource-op">
-              {{ resource.name }}&nbsp;
+              {{ resource.name }}
               <i class="icon-trash delete" @click="deleteResource(agent, index)"></i>
             </span>
           </el-col>
@@ -89,10 +71,17 @@
 
 <script>
   import Overview from '@/components/agent-detail/overview.vue'
+  import Toolbar from '@/components/agent-detail/toolbar.vue'
+
+  const windowsImg = require('@/assets/images/windows.png')
+  const ubuntuImg = require('@/assets/images/ubuntu.png')
+  const centosImg = require('@/assets/images/cent_os.png')
+  const debinImg = require('@/assets/images/debin.png')
+  const suseImg = require('@/assets/images/suse.png')
 
   export default {
     name: 'AgentDetail',
-    components: { Overview },
+    components: { Overview, Toolbar },
 
     data () {
       return {
@@ -195,11 +184,17 @@
 
     filters: {
       getImageUrl (systemName) {
-        // @error image url will not work after webpack packaging
-        if (process.env.NODE_ENV === 'production') {
-          return `static/images/${systemName}.png`
-        } else {
-          return `src/assets/images/${systemName}.png`
+        switch (systemName) {
+          case 'windows':
+            return windowsImg
+          case 'ubuntu':
+            return ubuntuImg
+          case 'cent_os':
+            return centosImg
+          case 'debin':
+            return debinImg
+          case 'suse':
+            return suseImg
         }
       }
     }
@@ -211,26 +206,6 @@
 
   .row {
     margin-bottom: 20px;
-  }
-
-  .toolbar {
-    display: flex;
-    align-items: center;
-    height: $toolbar-height;
-    background-color: #fff;
-  }
-  .menu {
-    height: $toolbar-height;
-    @include text-align(center)
-
-    li {
-      width: 33.333333%;
-    }
-  }
-
-  .view {
-    padding: 0 20px;
-    @include text-align(right);
   }
 
   .agent {
@@ -255,18 +230,16 @@
 
     .info {
       margin: 20px 0;
-      line-height: 20px;
+      line-height: 1em;
       font-size: 14px;
 
-      & > div {
-        display: flex;
-        align-items: center;
-      }
     }
 
     .info-icon {
+      margin-right: 8px;
       font-size: 18px;
       color: #ccc;
+      vertical-align: text-top;
     }
   }
 
@@ -278,6 +251,7 @@
   .status {
     padding: 0 10px;
     color: #fff;
+    vertical-align: text-bottom;
   }
 
   .bg-green {
@@ -289,15 +263,18 @@
   }
 
   .path {
+    display: block;
     @include text-ellipsis();
   }
 
   .resource {
     line-height: 30px;
+    height: 30px;
   }
 
   .add {
-    padding: 2px 8px;
+    display: inline-block;
+    padding: 0 8px;
     background-color: #00b4cf;
     font-size: 18px;
     font-weight: bold;
@@ -334,8 +311,9 @@
   }
 
   .resource-op {
+    display: inline-block;
     margin: 0 10px;
-    padding: 4px 8px;
+    padding: 0 8px;
     background-color: #efefef;
   }
 
@@ -344,33 +322,18 @@
   }
 
   .deny {
-    padding: 4px 8px;
+    display: inline-block;
+    padding: 0 8px;
     background-color: #00b4cf;
     cursor: pointer;
   }
 
   .icon-deny {
-    vertical-align: text-top;
+    vertical-align: middle;
   }
 </style>
 
 <style lang="scss">
-  .agent-detail {
-    .el-menu-item {
-      height: 50px;
-      line-height: 50px;
-    }
-
-    .el-menu-item.is-active {
-      color: #409EFF;
-    }
-
-    .el-input__inner {
-      border-radius: 0;
-      background-color: #efefef;
-    }
-  }
-
   .add-popover {
     .el-input__inner {
       border-radius: 0;
