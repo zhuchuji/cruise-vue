@@ -3,11 +3,10 @@
     <Header></Header>
     <el-row type="flex" justify="center">
       <div class="body">
-        <el-col :span="5" :md="5" :lg="5" class="nav">
+        <el-col :span="5" :md="5" :lg="5" class="hidden-sm-and-down">
   		    <side-nav></side-nav>
-          <history></history>
         </el-col>
-        <el-col :span="19" :md="19" :lg="19" class="content">
+        <el-col :span="19" :sm="24" :md="19" :lg="19" class="content">
           <agent-detail></agent-detail>
         </el-col>
       </div>
@@ -21,11 +20,10 @@
   import SideNav from '@/components/side-nav.vue'
   import AgentDetail from '@/components/agent-detail.vue'
   import Footer from '@/components/footer.vue'
-  import History from '@/components/history.vue'
 
   export default {
     name: 'Dashboard',
-    components: { Header, SideNav, AgentDetail, Footer, History }
+    components: { Header, SideNav, AgentDetail, Footer }
   }
 </script>
 
@@ -56,10 +54,10 @@
     }
   }
 
-  .nav {
-    padding-top: $body-padding-top;
-    min-height: 600px;
-    background-color: #2d4054;
+  @media (min-width: 768px) {
+    .content {
+      padding: 20px 10px;
+    }
   }
 
 	.content {

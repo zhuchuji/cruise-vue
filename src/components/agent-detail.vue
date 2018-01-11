@@ -8,7 +8,7 @@
           <img :src="agent.system | getImageUrl"/>
         </div>
       </el-col>
-      <el-col :span="21" :lg="21" :md="24">
+      <el-col :span="21" :lg="21" :sm="24">
         <el-row class="info">
           <el-col :span="8" :lg="8" :md="9">
             <i class="icon-desktop info-icon"></i>

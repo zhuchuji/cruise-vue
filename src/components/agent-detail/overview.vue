@@ -56,7 +56,7 @@
     margin-bottom: $row-margin-bottom;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     .build  {
       margin-right: 4%;
     }
