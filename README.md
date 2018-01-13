@@ -11,6 +11,12 @@ A responsive dashboard for CI(Continuous Integration). It could be browsed on PC
 - scss refactor
 - basic UI implementation, e.g, navbar
 
+## Preview
+![PC-HD-1200](./preview/PC-HD-1200.png)
+![PC-1024](./preview/PC-1024.png)
+![table-768](./preview/tablet-768.png)
+![smartphone-320](./prewview/smartphone.png)
+
 ## Build Setup
 
 ``` bash
