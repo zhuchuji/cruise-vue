@@ -1,18 +1,18 @@
 <template>
   <el-row class="overview" type="flex">
-    <el-col :span="8">
+    <el-col :span="8" :sm="8" :xs="12">
       <div class="build">
         <p class="title">Building</p>
         <p class="number">3</p>
       </div>
     </el-col>
-    <el-col :span="8">
+    <el-col :span="8" :sm="8" :xs="12">
       <div class="idle">
         <p class="title">Idle</p>
         <p class="number">5</p>
       </div>
     </el-col>
-    <el-col :span="8">
+    <el-col :span="8" :sm="8" :xs="24">
       <div class="statistic">
         <el-row>
           <el-col :span="8">
@@ -41,7 +41,7 @@
 
 <style lang="scss" scoped>
   @import "~@/assets/styles/global.scss";
-  
+
   @mixin status-div ($bg-color, $text-color: #fff) {
     display: flex;
     flex-direction: column;
@@ -53,20 +53,20 @@
   }
 
   .overview {
+    flex-flow: row wrap;
+    align-content: 10px;
     margin-bottom: $row-margin-bottom;
   }
 
-  @media (min-width: 768px) {
-    .build  {
-      margin-right: 4%;
-    }
-    .idle {
-      margin-left: 4%;
-      margin-right: 4%;
-    }
-    .statistic {
-      margin-left: 4%;
-    }
+  .build  {
+    margin-right: 4%;
+  }
+  .idle {
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  .statistic {
+    margin-left: 4%;
   }
 
   .build {
@@ -80,6 +80,24 @@
   .statistic {
     @include status-div(#fff, #333);
     @include text-align(center);
+  }
+
+  @media screen and (max-width: 768px) {
+    .idle {
+      margin-right: 0;
+    }
+    .statistic {
+      margin: 20px 0;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .idle {
+      margin-right: 4%;
+    }
+    .statistic {
+      margin: 0 0 0 4%;
+    }
   }
 
   .title {

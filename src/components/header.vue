@@ -1,27 +1,29 @@
 <template>
-  <el-row class="header" type="flex" align="middle">
-    <el-col :span="2" class="menu">
-      <div class="hidden-md-and-up">
-        <i class="icon-th-list" @click="collapseNav"></i>
-        <el-row class="nav" v-show="isNavShow">
-          <el-col :sm="8">
-            <el-row class="side-nav">
-              <i class="icon-close" @click="uncollapseNav"></i>
-            </el-row>
-            <el-row>
-              <side-nav></side-nav>
-            </el-row>
-          </el-col>
-        </el-row>
-      </div>
-    </el-col>
-    <el-col :span="4" :offset="8">
-      <img class="logo" src="~@/assets/images/logo.svg"/>
-    </el-col>
-    <el-col :span="2" :offset="6">
-      <img class="user-avatar" src="~@/assets/images/windows.png"/>
-    </el-col>
-  </el-row>
+  <div class="wrapper">
+    <el-row class="header" type="flex" align="middle">
+      <el-col :span="2" :sm="2" :xs="4" class="menu">
+        <div class="hidden-md-and-up">
+          <i class="icon-th-list" @click="collapseNav"></i>
+          <el-row class="nav" v-show="isNavShow">
+            <el-col :sm="8">
+              <el-row class="side-nav">
+                <i class="icon-close" @click="uncollapseNav"></i>
+              </el-row>
+              <el-row>
+                <side-nav></side-nav>
+              </el-row>
+            </el-col>
+          </el-row>
+        </div>
+      </el-col>
+      <el-col :span="20" :sm="20" :xs="16" class="logo">
+        <img class="logo" src="~@/assets/images/logo.svg"/>
+      </el-col>
+      <el-col :span="2" :sm="2" :xs="4" class="user">
+        <img class="user-avatar" src="~@/assets/images/windows.png"/>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -51,17 +53,31 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~@/assets/styles/global.scss";
+
   $header-height: 60px;
 
-  .header {
+  .wrapper {
     border-bottom: 0;
     box-shadow: 0 0 8px 0 #ccc;
     height: $header-height;
     background-color: #fff;
   }
 
+  .header {
+    margin: 0 auto;
+    height: $header-height;
+  }
+
+  .header {
+    @include desktop-hd {
+      width: 1200px;
+    }
+  }
+
   .menu {
-    text-align: center;
+    display: flex;
+    justify-content: center;
   }
 
   .nav {
@@ -85,7 +101,17 @@
   }
 
   .logo {
-    height: $header-height / 2;
+    display: flex;
+    justify-content: center;
+
+    img {
+      height: $header-height / 2;
+    }
+  }
+
+  .user {
+    display: flex;
+    justify-content: center;
   }
 
   .user-avatar {

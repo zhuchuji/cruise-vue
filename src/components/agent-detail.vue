@@ -8,22 +8,22 @@
           <img :src="agent.system | getImageUrl"/>
         </div>
       </el-col>
-      <el-col :span="21" :lg="21" :sm="24">
+      <el-col :span="21" :lg="21" :sm="24" :xs="24">
         <el-row class="info">
-          <el-col :span="8" :lg="8" :md="9">
+          <el-col :span="8" :lg="8" :md="9" :sm="9" :xs="24">
             <i class="icon-desktop info-icon"></i>
             <span class="domain">{{ agent.domain }}</span>
           </el-col>
-          <el-col :span="4" :lg="4" :md="3">
+          <el-col :span="4" :lg="4" :md="3" :sm="3" class="hidden-xs-only">
             <span class="status" :class="statusBgColor(agent.status)">
               {{ agent.status }}
             </span>
           </el-col>
-          <el-col :span="5">
+          <el-col :span="5" :sm="5" :xs="24">
             <i class="icon-info  info-icon"></i>
             <span>{{ agent.ip }}</span>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="7" :sm="7" :xs="24">
             <span class="path">
               <i class="icon-folder  info-icon"></i>
               <span>{{ agent.path }}</span>
@@ -31,33 +31,39 @@
           </el-col>
         </el-row>
         <el-row class="resource">
-          <el-col :span="20">
-            <el-popover
-              trigger="manual"
-              v-model="agent.isAddResShow">
-              <div class="add-popover">
-                <i class="icon-close" @click="closeAddResources(agent)"></i>
-                <p class="desc">seperate multiple resource name with commas</p>
-                <div class="input-resources">
-                  <el-input v-model="resources"></el-input>
-                </div>
-                <el-button class="add-resources" size="small"
-                  @click="addResources(agent)">
-                  Add Resources
-                </el-button>
-                <el-button size="small" @click="closeAddResources(agent)">Cancel</el-button>
-              </div>
-              <span slot="reference" class="add" @click="showAddResources(agent)">
-                <i class="icon-plus"></i>
-              </span>
-            </el-popover>
-            <span v-for="(resource, index) in agent.resources" :key="index"
-              class="resource-op">
-              {{ resource.name }}
-              <i class="icon-trash delete" @click="deleteResource(agent, index)"></i>
-            </span>
+          <el-col :span="20" :sm="20" :xs="24">
+            <el-row>
+              <el-col :sm="1" :xs="2">
+                <el-popover
+                  trigger="manual"
+                  v-model="agent.isAddResShow">
+                  <div class="add-popover">
+                    <i class="icon-close" @click="closeAddResources(agent)"></i>
+                    <p class="desc">seperate multiple resource name with commas</p>
+                    <div class="input-resources">
+                      <el-input v-model="resources"></el-input>
+                    </div>
+                    <el-button class="add-resources" size="small"
+                      @click="addResources(agent)">
+                      Add Resources
+                    </el-button>
+                    <el-button size="small" @click="closeAddResources(agent)">Cancel</el-button>
+                  </div>
+                    <span slot="reference" class="add" @click="showAddResources(agent)">
+                      <i class="icon-plus"></i>
+                    </span>
+                </el-popover>
+              </el-col>
+              <el-col :sm="23" :xs="22">
+                <span v-for="(resource, index) in agent.resources" :key="index"
+                  class="resource-op">
+                  {{ resource.name }}
+                  <i class="icon-trash delete" @click="deleteResource(agent, index)"></i>
+                </span>
+              </el-col>
+            </el-row>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="4" :sm="4" :xs="24" class="deny-box">
             <span class="deny" v-if="agent.status == 'building'">
               <i class="icon-deny"></i>
               deny
@@ -209,7 +215,6 @@
   }
 
   .agent {
-    height: 100px;
     background-color: #fff;
 
     .system {
@@ -229,10 +234,20 @@
     }
 
     .info {
-      margin: 20px 0;
-      line-height: 1em;
+      display: flex;
+      flex-flow: wrap;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      line-height: 2em;
       font-size: 14px;
 
+    }
+
+    .resource {
+      display: flex;
+      flex-flow: wrap;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     .info-icon {
@@ -269,7 +284,6 @@
 
   .resource {
     line-height: 30px;
-    height: 30px;
   }
 
   .add {
@@ -296,7 +310,7 @@
       font-weight: bold;
       cursor: pointer;
     }
-    
+
     .input-resources {
       margin-bottom: 10px;
     }
@@ -312,13 +326,19 @@
 
   .resource-op {
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 10px 10px 10px;
     padding: 0 8px;
     background-color: #efefef;
   }
 
   .delete {
     cursor: pointer;
+  }
+
+  .deny-box {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
   }
 
   .deny {

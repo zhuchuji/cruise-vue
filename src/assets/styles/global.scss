@@ -14,3 +14,27 @@ $row-margin-bottom: 20px;
   text-overflow: ellipsis;
 }
 
+
+@mixin desktop-hd () {
+  @media screen and (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin desktop () {
+  @media screen and (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin tablet () {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin smartphone () {
+  @media screen and (max-width: 768) {
+    @content;
+  }
+}
