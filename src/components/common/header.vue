@@ -1,12 +1,12 @@
 <template>
   <div class="wrapper">
     <el-row class="header" type="flex" align="middle">
-      <el-col :span="2" :sm="2" :xs="4" class="menu">
+      <el-col :span="4" class="menu">
         <div class="hidden-md-and-up">
           <i class="icon-th-list" @click="collapseNav"></i>
           <el-row class="nav" v-show="isNavShow">
-            <el-col :sm="8">
-              <el-row class="side-nav">
+            <el-col :sm="8" :xs="24" class="side-nav">
+              <el-row class="close">
                 <i class="icon-close" @click="uncollapseNav"></i>
               </el-row>
               <el-row>
@@ -16,10 +16,10 @@
           </el-row>
         </div>
       </el-col>
-      <el-col :span="20" :sm="20" :xs="16" class="logo">
+      <el-col :span="16" class="logo">
         <img class="logo" src="~@/assets/images/logo.svg"/>
       </el-col>
-      <el-col :span="2" :sm="2" :xs="4" class="user">
+      <el-col :span="4" class="user">
         <img class="user-avatar" src="~@/assets/images/windows.png"/>
       </el-col>
     </el-row>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import SideNav from '@/components/side-nav.vue'
+  import SideNav from '@/components/common/side-nav.vue'
 
   export default {
     name: 'Header',
@@ -55,29 +55,25 @@
 <style lang="scss" scoped>
   @import "~@/assets/styles/global.scss";
 
-  $header-height: 60px;
-
   .wrapper {
+    position: fixed;
+    z-index: 500;
     border-bottom: 0;
     box-shadow: 0 0 8px 0 #ccc;
+    width: 100%;
     height: $header-height;
     background-color: #fff;
   }
 
   .header {
+    box-sizing: border-box;
     margin: 0 auto;
+    padding: 0 20px;
     height: $header-height;
-  }
 
-  .header {
     @include desktop-hd {
       width: 1200px;
     }
-  }
-
-  .menu {
-    display: flex;
-    justify-content: center;
   }
 
   .nav {
@@ -90,13 +86,16 @@
   }
 
   .side-nav {
-    padding: 10px 20px;
-    background-color: #2d4054;
+    background-color: $dark-blue;
+  }
+
+  .close {
+    padding: 8%;
     text-align: right;
 
     .icon-close {
+      font-size: 1.2em;
       color: #fff;
-      cursor: pointer;
     }
   }
 
@@ -111,7 +110,7 @@
 
   .user {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
   }
 
   .user-avatar {

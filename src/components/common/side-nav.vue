@@ -68,20 +68,20 @@
   .sidebar {
     padding-top: 20px;
     min-height: 600px;
-    background-color: #2d4054;
-    text-align: left;
+    background-color: $dark-blue;
   }
 
   .menu-icon {
-    margin-right: 10px;
+    margin-right: 4%;
+    font-size: 1.2rem;
   }
 
   .history {
-    padding: 15px;
+    padding: 5%;
 
     h3 {
       color: #ccc;
-      font-size: 24px;
+      font-size: 1.5rem;
       font-weight: normal;
     }
 
@@ -89,24 +89,24 @@
       list-style: none;
       padding-left: 0;
       color: #999;
-      font-size: 12px;
-      line-height: 20px;
+      font-size: 0.8rem;
+      line-height: 1.8rem;
 
       li {
         @include text-ellipsis();
-      }
 
-      li:before {
-        content: "•";
-      }
+        &:before {
+          content: "•";
+        }
 
-      li:hover {
-        cursor: pointer;
-        color: #00b4cf;
+        &:hover {
+          cursor: pointer;
+          color: $light-blue;
+        }
       }
 
       .desc {
-        margin-left: 20px;
+        margin-left: 8%;
       }
     }
   }
@@ -118,8 +118,8 @@
       border-right: 0;
     }
     .el-menu-item {
-      padding-left: 30px !important;
-      padding-right: 30px !important;
+      padding-left: 10% !important;
+      padding-right: 10% !important;
 
       &:hover {
         background-color: #435466 !important;

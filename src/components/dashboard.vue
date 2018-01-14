@@ -3,10 +3,10 @@
     <Header></Header>
     <el-row type="flex" justify="center">
       <div class="body">
-        <el-col :span="5" :md="5" :lg="5" class="hidden-sm-and-down">
+        <el-col :span="5" class="hidden-sm-and-down">
   		    <side-nav></side-nav>
         </el-col>
-        <el-col :span="19" :xs="24" :md="19" class="content">
+        <el-col xs="24" :md="19" class="content">
           <agent-detail></agent-detail>
         </el-col>
       </div>
@@ -16,10 +16,10 @@
 </template>
 
 <script>
-  import Header from '@/components/header.vue'
-  import SideNav from '@/components/side-nav.vue'
-  import AgentDetail from '@/components/agent-detail.vue'
-  import Footer from '@/components/footer.vue'
+  import Header from '@/components/common/header.vue'
+  import SideNav from '@/components/common/side-nav.vue'
+  import AgentDetail from '@/components/agent-detail/agent-detail.vue'
+  import Footer from '@/components/common/footer.vue'
 
   export default {
     name: 'Dashboard',
@@ -28,10 +28,16 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~@/assets/styles/global.scss";
+
   $body-padding-top: 20px;
 
   .dashboard {
     background-color: #efefef;
+  }
+
+  .body {
+    margin-top: $header-height;
   }
 
   @media (max-width: 1024px) {

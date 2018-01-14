@@ -12,10 +12,10 @@ A responsive dashboard for CI(Continuous Integration). It could be browsed on PC
 - basic UI implementation, e.g, navbar
 
 ## Preview
-![PC-HD-1200](./preview/PC-HD-1200.png)
-![PC-1024](./preview/PC-1024.png)
-![table-768](./preview/tablet-768.png)
-![smartphone-320](./prewview/smartphone.png)
+![PC-HD-1200](./preview/PC-HD-1200.png | width=400)
+![PC-1024](./preview/PC-1024.png | width=350)
+![table-768](./preview/tablet-768.png | width=300)
+![smartphone-320](./prewview/smartphone-320.png | width=200)
 
 ## Build Setup
 

@@ -3,6 +3,12 @@ $toolbar-height: 50px;
 // margin-bottom in agent-detail
 $row-margin-bottom: 20px;
 
+// height of the header
+$header-height: 60px;
+
+// global-defined colors
+$dark-blue: #2d4054;
+$light-blue: #00b4cf;
 
 @mixin text-align ($align) {
   text-align: $align;
@@ -14,27 +20,32 @@ $row-margin-bottom: 20px;
   text-overflow: ellipsis;
 }
 
+// media query for responsive layout
+$desktop-hd: 1200px;
+$desktop: 1024px;
+$tablet: 768px;
+$smartphone: $tablet - 1px;
 
 @mixin desktop-hd () {
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: $desktop-hd) {
     @content;
   }
 }
 
 @mixin desktop () {
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: $desktop) {
     @content;
   }
 }
 
 @mixin tablet () {
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: $tablet) {
     @content;
   }
 }
 
 @mixin smartphone () {
-  @media screen and (max-width: 768) {
+  @media screen and (max-width: $smartphone) {
     @content;
   }
 }
