@@ -26,14 +26,8 @@ $desktop: 1024px;
 $tablet: 768px;
 $smartphone: $tablet - 1px;
 
-@mixin desktop-hd () {
-  @media screen and (min-width: $desktop-hd) {
-    @content;
-  }
-}
-
-@mixin desktop () {
-  @media screen and (min-width: $desktop) {
+@mixin smartphone () {
+  @media screen and (max-width: $smartphone) {
     @content;
   }
 }
@@ -44,8 +38,22 @@ $smartphone: $tablet - 1px;
   }
 }
 
-@mixin smartphone () {
-  @media screen and (max-width: $smartphone) {
+@mixin desktop () {
+  @media screen and (min-width: $desktop) {
     @content;
   }
+}
+
+@mixin desktop-hd () {
+  @media screen and (min-width: $desktop-hd) {
+    @content;
+  }
+}
+
+.container {
+  width: 100%;
+}
+
+.container--white {
+  background-color: #fff;
 }
