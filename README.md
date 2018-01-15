@@ -15,7 +15,7 @@ A responsive dashboard for CI(Continuous Integration). It could be browsed on PC
 ![PC-HD-1200](./preview/PC-HD-1200.png)
 ![PC-1024](./preview/PC-1024.png)
 ![table-768](./preview/tablet-768.png)
-![smartphone-320](./prewview/smartphone-320.png)
+![smartphone-320](./preview/smartphone-320.png)
 
 ## Build Setup
 
