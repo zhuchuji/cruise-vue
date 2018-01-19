@@ -2,11 +2,11 @@
 	<div class="dashboard">
     <Header></Header>
     <el-row type="flex" justify="center">
-      <div class="body">
+      <div class="dashboard__body">
         <el-col :span="5" class="hidden-sm-and-down">
   		    <side-nav></side-nav>
         </el-col>
-        <el-col xs="24" :md="19" class="content">
+        <el-col :span="24" :md="19" class="dashboard__content">
           <agent-detail></agent-detail>
         </el-col>
       </div>
@@ -27,55 +27,32 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~@/assets/styles/global.scss";
+<style lang="scss">
+  @import "~@/assets/styles/vars-mixins.scss";
 
   $body-padding-top: 20px;
 
   .dashboard {
     background-color: #efefef;
-  }
 
-  .body {
-    margin-top: $header-height;
-  }
+    &__body {
+      margin-top: $header-height;
 
-  @media (max-width: 1024px) {
-    .body {
-      width: 100%;
-    }
-    .content {
-      padding: 20px 10px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .content {
-      padding: 20px 1%;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .body {
-      width: 1024px;
+      @include desktop-hd {
+        @include container($desktop-hd)
+      }
+      @include desktop-and-down {
+        @include container()
+      }
     }
 
-    .content {
-      padding: 20px 10px;
+    &__content {
+      @include desktop-hd {
+        padding: 20px;
+      }
+      @include desktop-and-down {
+        padding: 20px 1%;
+      }
     }
   }
-
-  @media (min-width: 1200px) {
-    .body {
-      width: 1200px;
-    }
-
-    .content {
-      padding: 20px;
-    }
-  }
-
-	.content {
-		min-height: 400px;
-	}
 </style>

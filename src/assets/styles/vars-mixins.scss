@@ -1,0 +1,99 @@
+// toolbar variables in agent-detail.vue
+$toolbar-height: 50px;
+// margin-bottom in agent-detail
+$row-margin-bottom: 20px;
+
+// height of the header
+$header-height: 60px;
+
+// global-defined colors
+$dark-blue: #2d4054;
+$light-blue: #00b4cf;
+$bright-orange: #ff9a2a;
+$bright-green: #7fbc39;
+
+@mixin container ($width: 100%) {
+  width: $width;
+}
+
+@mixin text-align ($align) {
+  text-align: $align;
+}
+
+@mixin text-ellipsis () {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// media query for responsive layout
+$desktop-hd: 1200px;
+$desktop: 1024px;
+$tablet: 768px;
+$smartphone: $tablet - 1px;
+
+@mixin smartphone {
+  @media screen and (max-width: $smartphone) {
+    @content;
+  }
+}
+@mixin smartphone-only {
+  @media only screen and (max-width: $smartphone) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: $tablet) {
+    @content;
+  }
+}
+@mixin tablet-only {
+  @media only screen and (min-width: $tablet) and (max-width: $desktop) {
+    @content;
+  }
+}
+@mixin tablet-and-down {
+  @media only-screen and (max-width: $desktop) {
+    @content;
+  }
+}
+@mixin tablet-and-up {
+  @media only screen and (min-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $desktop) {
+    @content;
+  }
+}
+@mixin desktop-only {
+  @media only screen and (min-width: $desktop) and (max-width: $desktop-hd) {
+    @content;
+  }
+}
+@mixin desktop-and-down {
+  @media only screen and (max-width: $desktop-hd) {
+    @content;
+  }
+}
+@mixin desktop-and-up {
+  @media only screen and (min-width: $desktop) {
+    @content;
+  }
+}
+
+@mixin desktop-hd {
+  @media screen and (min-width: $desktop-hd) {
+    @content;
+  }
+}
+@mixin desktop-hd-only {
+  @media only screen and (min-width: $desktop-hd) {
+    @content;
+  }
+}
+

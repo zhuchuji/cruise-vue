@@ -1,12 +1,12 @@
 <template>
-  <div class="wrapper">
+  <div class="header__container">
     <el-row class="header" type="flex" align="middle">
-      <el-col :span="4" class="menu">
+      <el-col :span="4">
         <div class="hidden-md-and-up">
           <i class="icon-th-list" @click="collapseNav"></i>
-          <el-row class="nav" v-show="isNavShow">
-            <el-col :sm="8" :xs="24" class="side-nav">
-              <el-row class="close">
+          <el-row class="header__nav" v-show="isNavShow">
+            <el-col :sm="8" :xs="24">
+              <el-row class="header__nav-close">
                 <i class="icon-close" @click="uncollapseNav"></i>
               </el-row>
               <el-row>
@@ -16,11 +16,11 @@
           </el-row>
         </div>
       </el-col>
-      <el-col :span="16" class="logo">
-        <img class="logo" src="~@/assets/images/logo.svg"/>
+      <el-col :span="16" class="header__logo">
+        <img class="header__logo-img" src="~@/assets/images/logo.svg"/>
       </el-col>
-      <el-col :span="4" class="user">
-        <img class="user-avatar" src="~@/assets/images/windows.png"/>
+      <el-col :span="4" class="header__user">
+        <img class="header__user-img" src="~@/assets/images/windows.png"/>
       </el-col>
     </el-row>
   </div>
@@ -41,82 +41,73 @@
 
     methods: {
       collapseNav () {
-        console.log('collapse navbar')
         this.isNavShow = true
       },
       uncollapseNav () {
-        console.log('uncollapse navbar')
         this.isNavShow = false
       }
     }
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~@/assets/styles/global.scss";
-
-  .wrapper {
-    position: fixed;
-    z-index: 500;
-    border-bottom: 0;
-    box-shadow: 0 0 8px 0 #ccc;
-    width: 100%;
-    height: $header-height;
-    background-color: #fff;
-  }
+<style lang="scss">
+  @import "~@/assets/styles/vars-mixins.scss";
 
   .header {
     box-sizing: border-box;
     margin: 0 auto;
     padding: 0 20px;
     height: $header-height;
-
     @include desktop-hd {
-      width: 1200px;
+      width: $desktop-hd;
     }
-  }
 
-  .nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    width: 100%;
-    background: rgba(39, 39, 39, 0.8);
-  }
+    &__container {
+      @include container();
+      position: fixed;
+      z-index: 500;
+      border-bottom: 0;
+      box-shadow: 0 0 8px 0 #ccc;
+      height: $header-height;
+      background-color: #fff;
+    }
 
-  .side-nav {
-    background-color: $dark-blue;
-  }
+    &__nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      width: 100%;
+      background-color: rgba(39, 39, 39, 0.8);
+    }
 
-  .close {
-    padding: 8%;
-    text-align: right;
-
-    .icon-close {
+    &__nav-close {
+      background-color: $dark-blue;
+      padding: 8%;
+      text-align: right;
       font-size: 1.2em;
       color: #fff;
     }
-  }
 
-  .logo {
-    display: flex;
-    justify-content: center;
+    &__logo {
+      display: flex;
+      justify-content: center;
+    }
 
-    img {
+    &__logo-img {
       height: $header-height / 2;
     }
-  }
 
-  .user {
-    display: flex;
-    justify-content: flex-end;
-  }
+    &__user {
+      display: flex;
+      justify-content: flex-end;
+    }
 
-  .user-avatar {
-    border: 0;
-    border-radius: $header-height / 2;
-    width: $header-height / 2;
-    height: $header-height / 2;
+    &__user-img {
+      border: 0;
+      border-radius: $header-height / 2;
+      width: $header-height / 2;
+      height: $header-height / 2;
+    }
   }
 </style>

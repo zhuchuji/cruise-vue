@@ -1,31 +1,31 @@
 <template>
-  <el-row class="overview" type="flex">
+  <el-row class="overview">
     <el-col :span="8" :sm="8" :xs="12">
-      <div class="build">
-        <p class="title">Building</p>
-        <p class="number">3</p>
+      <div class="overview__block overview__block--first overview__block--build">
+        <p class="overview__title">Building</p>
+        <p class="overview__number">3</p>
       </div>
     </el-col>
     <el-col :span="8" :sm="8" :xs="12">
-      <div class="idle">
-        <p class="title">Idle</p>
-        <p class="number">5</p>
+      <div class="overview__block overview__block--idle">
+        <p class="overview__title">Idle</p>
+        <p class="overview__number">5</p>
       </div>
     </el-col>
     <el-col :span="8" :sm="8" :xs="24">
-      <div class="statistic">
+      <div class="overview__block overview__block--last overview__block--statistic">
         <el-row>
           <el-col :span="8">
-            <div class="type">ALL</div>
-            <div class="num">8</div>
+            <div class="overview__type">ALL</div>
+            <div class="overview__type-num">8</div>
           </el-col>
           <el-col :span="8">
-            <div class="type">PHISICAL</div>
-            <div class="num">4</div>
+            <div class="overview__type">PHISICAL</div>
+            <div class="overview__type-num">4</div>
           </el-col>
           <el-col :span="8">
-            <div class="type">VIRTUAL</div>
-            <div class="num">4</div>
+            <div class="overview__type">VIRTUAL</div>
+            <div class="overview__type-num">4</div>
           </el-col>
         </el-row>
       </div>
@@ -39,84 +39,76 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~@/assets/styles/global.scss";
+<style lang="scss">
+  @import "~@/assets/styles/vars-mixins.scss";
 
-  @mixin status-div ($bg-color, $text-color: #fff) {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px 20px;
-    height: 100px;
+  @mixin overview-block ($bg-color: #fff, $text-color: #fff) {
     background-color: $bg-color;
     color: $text-color;
   }
 
   .overview {
-    flex-flow: row wrap;
+    display: flex;
+    flex-flow: wrap;
     align-content: 10px;
     margin-bottom: $row-margin-bottom;
-  }
 
-  .build  {
-    margin-right: 4%;
-  }
-  .idle {
-    margin-left: 4%;
-    margin-right: 4%;
-  }
-  .statistic {
-    margin-left: 4%;
-  }
-
-  .build {
-    @include status-div(#ff9a2a);
-  }
-
-  .idle {
-    @include status-div(#7fbc39);
-  }
-
-  .statistic {
-    @include status-div(#fff, #333);
-    @include text-align(center);
-  }
-
-  @media screen and (max-width: 768px) {
-    .idle {
-      margin-right: 0;
-    }
-    .statistic {
-      margin: 20px 0;
-    }
-  }
-
-  @media screen and (min-width: 768px) {
-    .idle {
+    &__block {
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
+      margin-left: 4%;
       margin-right: 4%;
+      padding: 10px 20px;
+      height: 100px;
+
+      &--first {
+        margin-left: 0;
+      }
+      &--last {
+        margin-right: 0;
+      }
+
+      &--build {
+        @include overview-block($bright-orange);
+      }
+
+      &--idle {
+        @include overview-block($bright-green);
+        @include smartphone {
+          margin-right: 0;
+        }
+      }
+
+      &--statistic {
+        @include overview-block($text-color: #333);
+        @include smartphone {
+          margin-left: 0;
+          margin-top: $row-margin-bottom;
+        }
+        text-align: center;
+      }
     }
-    .statistic {
-      margin: 0 0 0 4%;
+
+    &__title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      line-height: 1.5em;
     }
-  }
 
-  .title {
-    font-size: 18px;
-    font-weight: bold;
-  }
+    &__number {
+      font-size: 3.5rem;
+      text-align: right;
+    }
 
-  .number {
-    font-size: 48px;
-    @include text-align(right);
-  }
+    &__type {
+      font-size: 1rem;
+      line-height: 2.5rem;
+    }
 
-  .type {
-    line-height: 40px;
-    font-size: 12px;
-  }
-
-  .num {
-    line-height: 60px;
-    font-size: 28px;
+    &__type-num {
+      font-size: 2.5rem;
+      line-height: 4rem;
+    }
   }
 </style>
