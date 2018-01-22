@@ -32,8 +32,8 @@
         </el-row>
         <el-row class="agent__resources">
           <el-col :span="20" :sm="20" :xs="24">
-            <el-row>
-              <el-col :sm="1" :xs="2">
+            <el-row :gutter="0">
+              <el-col :sm="2" :xs="3">
                 <el-popover
                   trigger="manual"
                   v-model="agent.isAddResShow">
@@ -55,7 +55,7 @@
                     </span>
                 </el-popover>
               </el-col>
-              <el-col :sm="23" :xs="22">
+              <el-col :sm="22" :xs="21">
                 <span v-for="(resource, index) in agent.resources" :key="index"
                   class="agent__resources-item">
                   {{ resource.name }}
@@ -181,7 +181,9 @@
       addResources (agent) {
         let resources = this.resources.split(',')
         for (let resource of resources) {
-          agent.resources.push({name: resource.trim()})
+          if (resource !== '') {
+            agent.resources.push({name: resource.trim()})
+          }
         }
       },
       closeAddResources (agent) {
