@@ -35,10 +35,13 @@
             <el-row :gutter="0">
               <el-col :sm="2" :xs="3">
                 <el-popover
+                  class="hidden-sm-and-down"
                   trigger="manual"
                   v-model="agent.isAddResShow">
                   <div class="agent__resources-form">
-                    <i class="icon-close" @click="closeAddResources(agent)"></i>
+                    <p class="agent__close">
+                      <i class="icon-close" @click="closeAddRes(agent)"></i>
+                    </p>
                     <p>seperate multiple resource name with commas</p>
                     <div class="agent__resources-input">
                       <el-input v-model="resources"></el-input>
@@ -47,13 +50,35 @@
                       @click="addResources(agent)">
                       Add Resources
                     </el-button>
-                    <el-button size="small" @click="closeAddResources(agent)">Cancel</el-button>
+                    <el-button size="small" @click="closeAddRes(agent)">Cancel</el-button>
                   </div>
                     <span slot="reference" class="agent__resources-add"
                       @click="showAddResources(agent)">
                       <i class="icon-plus"></i>
                     </span>
                 </el-popover>
+                <span class="hidden-md-and-up agent__resources-add"
+                  @click="showAddResDlg(agent)">
+                  <i class="icon-plus"></i>
+                </span>
+                <div class="agent__resources-container" v-show="agent.isAddResDlgShow">
+                  <div class="agent__resources-dlg">
+                    <div class="agent__resources-form">
+                      <p class="agent__close">
+                        <i class="icon-close" @click="closeAddResDlg(agent)"></i>
+                      </p>
+                      <p>seperate multiple resource name with commas</p>
+                      <div class="agent__resources-input">
+                        <el-input v-model="resources"></el-input>
+                      </div>
+                      <el-button class="agent__resources-confirm" size="small"
+                        @click="addResources(agent)">
+                        Add Resources
+                      </el-button>
+                      <el-button size="small" @click="closeAddResDlg(agent)">Cancel</el-button>
+                    </div>
+                  </div>
+                </div>
               </el-col>
               <el-col :sm="22" :xs="21">
                 <span v-for="(resource, index) in agent.resources" :key="index"
@@ -102,7 +127,8 @@
             path: '/var/lib/cruise-agent/test/practice/game/user/home',
             resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'},
               {id: '3', name: 'Ubuntu'}, {id: '4', name: 'Chrome'}],
-            isAddResShow: false
+            isAddResShow: false,
+            isAddResDlgShow: false
           },
           {
             id: '2',
@@ -113,7 +139,8 @@
             path: '/var/lib/cruise-agent',
             resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'},
               {id: '3', name: 'Ubuntu'}, {id: '4', name: 'Chrome'}],
-            isAddResShow: false
+            isAddResShow: false,
+            isAddResDlgShow: false
           },
           {
             id: '3',
@@ -123,7 +150,8 @@
             ip: '192.168.1.112',
             path: '/var/lib/cruise-agent',
             resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'}],
-            isAddResShow: false
+            isAddResShow: false,
+            isAddResDlgShow: false
           },
           {
             id: '4',
@@ -133,7 +161,8 @@
             ip: '192.168.1.102',
             path: '/var/lib/cruise-agent',
             resources: [],
-            isAddResShow: false
+            isAddResShow: false,
+            isAddResDlgShow: false
           },
           {
             id: '5',
@@ -143,7 +172,8 @@
             ip: '192.168.1.102',
             path: '/var/lib/cruise-agent',
             resources: [{id: '1', name: 'firefox'}, {id: '2', name: 'firefox'}],
-            isAddResShow: false
+            isAddResShow: false,
+            isAddResDlgShow: false
           },
           {
             id: '6',
@@ -154,7 +184,8 @@
             path: '/var/lib/cruise-agent',
             resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'},
               {id: '3', name: 'Ubuntu'}, {id: '4', name: 'Chrome'}],
-            isAddResShow: false
+            isAddResShow: false,
+            isAddResDlgShow: false
           }
         ],
         isAddResShow: false,
@@ -185,9 +216,19 @@
             agent.resources.push({name: resource.trim()})
           }
         }
-      },
-      closeAddResources (agent) {
         agent.isAddResShow = false
+        agent.isAddResDlgShow = false
+      },
+      closeAddRes (agent) {
+        agent.isAddResShow = false
+      },
+
+      showAddResDlg (agent) {
+        this.resources = ''
+        agent.isAddResDlgShow = true
+      },
+      closeAddResDlg (agent) {
+        agent.isAddResDlgShow = false
       }
     },
 
@@ -287,18 +328,24 @@
 
     &__resources-form {
       position: relative;
-      line-height: 40px;
-      width: 400px;
+      @include tablet-and-up {
+        width: 400px;
+      }
+      @include smartphone-only {
+        width: 100%;
+      }
+    }
+
+    &__close {
+      text-align: right;
 
       .icon-close {
-        position: absolute;
-        top: -5px;
-        right: 10px;
         color: #00b4cf;
         font-size: 20px;
         font-weight: bold;
         cursor: pointer;
       }
+
     }
 
     &__resources-input {
@@ -317,6 +364,28 @@
 
       .icon-trash {
         cursor: pointer;
+      }
+    }
+
+    &__resources-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      @include mask-bg-color();
+    }
+
+    &__resources-dlg {
+      padding: 10px 20px;
+      background-color: #fff;
+
+      @include smartphone-only {
+        width: 100%;
       }
     }
 

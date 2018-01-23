@@ -78,7 +78,7 @@
       left: 0;
       z-index: 100;
       width: 100%;
-      background-color: rgba(39, 39, 39, 0.8);
+      @include mask-bg-color();
     }
 
     &__nav-close {

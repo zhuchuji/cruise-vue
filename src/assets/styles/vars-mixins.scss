@@ -16,6 +16,10 @@ $bright-green: #7fbc39;
   width: $width;
 }
 
+@mixin mask-bg-color () {
+  background-color: rgba(39, 39, 39, 0.8);
+}
+
 @mixin text-align ($align) {
   text-align: $align;
 }
