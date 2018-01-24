@@ -2,7 +2,7 @@
   <div class="agent-detail">
     <overview></overview>
     <toolbar></toolbar>
-    <el-row class="agent" v-for="agent in agents" :key="agent.id">
+    <el-row class="agent" v-for="(agent, index) in agents" :key="agent.id">
       <el-col :span="3" :lg="3" class="hidden-md-and-down">
         <div class="agent__system">
           <img class="agent__system-img" :src="agent.system | getImageUrl"/>
@@ -32,62 +32,9 @@
         </el-row>
         <el-row class="agent__resources">
           <el-col :span="20" :sm="20" :xs="24">
-            <el-row :gutter="0">
-              <el-col :sm="2" :xs="3">
-                <el-popover
-                  class="hidden-sm-and-down"
-                  trigger="manual"
-                  v-model="agent.isAddResShow">
-                  <div class="agent__resources-form">
-                    <p class="agent__close">
-                      <i class="icon-close" @click="closeAddRes(agent)"></i>
-                    </p>
-                    <p>seperate multiple resource name with commas</p>
-                    <div class="agent__resources-input">
-                      <el-input v-model="resources"></el-input>
-                    </div>
-                    <el-button class="agent__resources-confirm" size="small"
-                      @click="addResources(agent)">
-                      Add Resources
-                    </el-button>
-                    <el-button size="small" @click="closeAddRes(agent)">Cancel</el-button>
-                  </div>
-                    <span slot="reference" class="agent__resources-add"
-                      @click="showAddResources(agent)">
-                      <i class="icon-plus"></i>
-                    </span>
-                </el-popover>
-                <span class="hidden-md-and-up agent__resources-add"
-                  @click="showAddResDlg(agent)">
-                  <i class="icon-plus"></i>
-                </span>
-                <div class="agent__resources-container" v-show="agent.isAddResDlgShow">
-                  <div class="agent__resources-dlg">
-                    <div class="agent__resources-form">
-                      <p class="agent__close">
-                        <i class="icon-close" @click="closeAddResDlg(agent)"></i>
-                      </p>
-                      <p>seperate multiple resource name with commas</p>
-                      <div class="agent__resources-input">
-                        <el-input v-model="resources"></el-input>
-                      </div>
-                      <el-button class="agent__resources-confirm" size="small"
-                        @click="addResources(agent)">
-                        Add Resources
-                      </el-button>
-                      <el-button size="small" @click="closeAddResDlg(agent)">Cancel</el-button>
-                    </div>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :sm="22" :xs="21">
-                <span v-for="(resource, index) in agent.resources" :key="index"
-                  class="agent__resources-item">
-                  {{ resource.name }}
-                  <i class="icon-trash" @click="deleteResource(agent, index)"></i>
-                </span>
-              </el-col>
-            </el-row>
+            <resources
+              :agent="agent">
+            </resources>
           </el-col>
           <el-col :span="4" :sm="4" :xs="24" class="agent__deny-box">
             <span class="agent__deny" v-if="agent.status == 'building'">
@@ -104,6 +51,7 @@
 <script>
   import Overview from '@/components/agent-detail/overview.vue'
   import Toolbar from '@/components/agent-detail/toolbar.vue'
+  import Resources from '@/components/agent-detail/resources.vue'
 
   const windowsImg = require('@/assets/images/windows.png')
   const ubuntuImg = require('@/assets/images/ubuntu.png')
@@ -113,7 +61,7 @@
 
   export default {
     name: 'AgentDetail',
-    components: { Overview, Toolbar },
+    components: { Overview, Toolbar, Resources },
 
     data () {
       return {
@@ -125,8 +73,8 @@
             status: 'idle',
             ip: '192.168.1.102',
             path: '/var/lib/cruise-agent/test/practice/game/user/home',
-            resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'},
-              {id: '3', name: 'Ubuntu'}, {id: '4', name: 'Chrome'}],
+            resources: [{name: 'Firefox'}, {name: 'Safari'},
+              {name: 'Ubuntu'}, {name: 'Chrome'}],
             isAddResShow: false,
             isAddResDlgShow: false
           },
@@ -137,8 +85,8 @@
             status: 'building',
             ip: '192.168.1.105',
             path: '/var/lib/cruise-agent',
-            resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'},
-              {id: '3', name: 'Ubuntu'}, {id: '4', name: 'Chrome'}],
+            resources: [{name: 'Firefox'}, {name: 'Safari'},
+              {name: 'Ubuntu'}, {name: 'Chrome'}],
             isAddResShow: false,
             isAddResDlgShow: false
           },
@@ -149,7 +97,7 @@
             status: 'building',
             ip: '192.168.1.112',
             path: '/var/lib/cruise-agent',
-            resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'}],
+            resources: [{name: 'Firefox'}, {name: 'Safari'}],
             isAddResShow: false,
             isAddResDlgShow: false
           },
@@ -171,7 +119,7 @@
             status: 'building',
             ip: '192.168.1.102',
             path: '/var/lib/cruise-agent',
-            resources: [{id: '1', name: 'firefox'}, {id: '2', name: 'firefox'}],
+            resources: [{name: 'firefox'}, {name: 'firefox'}],
             isAddResShow: false,
             isAddResDlgShow: false
           },
@@ -182,8 +130,8 @@
             status: 'idle',
             ip: '192.168.1.102',
             path: '/var/lib/cruise-agent',
-            resources: [{id: '1', name: 'Firefox'}, {id: '2', name: 'Safari'},
-              {id: '3', name: 'Ubuntu'}, {id: '4', name: 'Chrome'}],
+            resources: [{name: 'Firefox'}, {name: 'Safari'},
+              {name: 'Ubuntu'}, {name: 'Chrome'}],
             isAddResShow: false,
             isAddResDlgShow: false
           }
@@ -200,35 +148,6 @@
         } else if (status === 'building') {
           return 'bg-orange'
         }
-      },
-
-      deleteResource (agent, resourceIndex) {
-        agent.resources.splice(resourceIndex, 1)
-      },
-      showAddResources (agent) {
-        this.resources = ''
-        agent.isAddResShow = true
-      },
-      addResources (agent) {
-        let resources = this.resources.split(',')
-        for (let resource of resources) {
-          if (resource !== '') {
-            agent.resources.push({name: resource.trim()})
-          }
-        }
-        agent.isAddResShow = false
-        agent.isAddResDlgShow = false
-      },
-      closeAddRes (agent) {
-        agent.isAddResShow = false
-      },
-
-      showAddResDlg (agent) {
-        this.resources = ''
-        agent.isAddResDlgShow = true
-      },
-      closeAddResDlg (agent) {
-        agent.isAddResDlgShow = false
       }
     },
 
@@ -310,83 +229,6 @@
       padding-left: 10px;
       padding-right: 10px;
       line-height: 30px;
-    }
-
-    &__resources-add {
-      display: inline-block;
-      padding: 0 8px;
-      background-color: #00b4cf;
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #fff;
-      cursor: pointer;
-
-      .icon-plus {
-        vertical-align: middle;
-      }
-    }
-
-    &__resources-form {
-      position: relative;
-      @include tablet-and-up {
-        width: 400px;
-      }
-      @include smartphone-only {
-        width: 100%;
-      }
-    }
-
-    &__close {
-      text-align: right;
-
-      .icon-close {
-        color: #00b4cf;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-
-    }
-
-    &__resources-input {
-      margin-bottom: 10px;
-    }
-
-    &__resources-confirm {
-      background-color: #00b4cf;
-    }
-
-    &__resources-item {
-      display: inline-block;
-      margin: 0 10px 10px 10px;
-      padding: 0 8px;
-      background-color: #efefef;
-
-      .icon-trash {
-        cursor: pointer;
-      }
-    }
-
-    &__resources-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      @include mask-bg-color();
-    }
-
-    &__resources-dlg {
-      padding: 10px 20px;
-      background-color: #fff;
-
-      @include smartphone-only {
-        width: 100%;
-      }
     }
 
     &__deny-box {
