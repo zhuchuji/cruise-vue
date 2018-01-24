@@ -18,23 +18,12 @@
 <script>
   /*
    * @component ResourcesAddForm
-   * @prop {Object} agent - The agent which resources are added to
    * @event add - Add resources
    * @event close - Close the form
    */
 
   export default {
     name: 'ResourcesAddForm',
-
-    props: {
-      agent: {
-        type: Object,
-        validator: (agent) => {
-          return agent.hasOwnProperty('resources') &&
-            agent.resources instanceof Array
-        }
-      }
-    },
 
     data () {
       return {
@@ -50,10 +39,10 @@
         for (let resource of resArray) {
           resource = resource.trim()
         }
-        this.$emit('add', this.agent, resArray)
+        this.$emit('add', resArray)
       },
       close () {
-        this.$emit('close', this.agent)
+        this.$emit('close')
       }
     }
   }

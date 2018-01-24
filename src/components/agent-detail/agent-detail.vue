@@ -33,7 +33,7 @@
         <el-row class="agent__resources">
           <el-col :span="20" :sm="20" :xs="24">
             <resources
-              :agent="agent">
+              :resources="agent.resources">
             </resources>
           </el-col>
           <el-col :span="4" :sm="4" :xs="24" class="agent__deny-box">
@@ -74,9 +74,7 @@
             ip: '192.168.1.102',
             path: '/var/lib/cruise-agent/test/practice/game/user/home',
             resources: [{name: 'Firefox'}, {name: 'Safari'},
-              {name: 'Ubuntu'}, {name: 'Chrome'}],
-            isAddResShow: false,
-            isAddResDlgShow: false
+              {name: 'Ubuntu'}, {name: 'Chrome'}]
           },
           {
             id: '2',
@@ -86,9 +84,7 @@
             ip: '192.168.1.105',
             path: '/var/lib/cruise-agent',
             resources: [{name: 'Firefox'}, {name: 'Safari'},
-              {name: 'Ubuntu'}, {name: 'Chrome'}],
-            isAddResShow: false,
-            isAddResDlgShow: false
+              {name: 'Ubuntu'}, {name: 'Chrome'}]
           },
           {
             id: '3',
@@ -97,9 +93,7 @@
             status: 'building',
             ip: '192.168.1.112',
             path: '/var/lib/cruise-agent',
-            resources: [{name: 'Firefox'}, {name: 'Safari'}],
-            isAddResShow: false,
-            isAddResDlgShow: false
+            resources: [{name: 'Firefox'}, {name: 'Safari'}]
           },
           {
             id: '4',
@@ -108,9 +102,7 @@
             status: 'idle',
             ip: '192.168.1.102',
             path: '/var/lib/cruise-agent',
-            resources: [],
-            isAddResShow: false,
-            isAddResDlgShow: false
+            resources: []
           },
           {
             id: '5',
@@ -119,9 +111,7 @@
             status: 'building',
             ip: '192.168.1.102',
             path: '/var/lib/cruise-agent',
-            resources: [{name: 'firefox'}, {name: 'firefox'}],
-            isAddResShow: false,
-            isAddResDlgShow: false
+            resources: [{name: 'firefox'}, {name: 'firefox'}]
           },
           {
             id: '6',
@@ -131,9 +121,7 @@
             ip: '192.168.1.102',
             path: '/var/lib/cruise-agent',
             resources: [{name: 'Firefox'}, {name: 'Safari'},
-              {name: 'Ubuntu'}, {name: 'Chrome'}],
-            isAddResShow: false,
-            isAddResDlgShow: false
+              {name: 'Ubuntu'}, {name: 'Chrome'}]
           }
         ],
         isAddResShow: false,

@@ -4,25 +4,23 @@
       <el-popover
         class="hidden-sm-and-down"
         trigger="manual"
-        v-model="agent.isAddResShow">
+        v-model="isAddResShow">
         <resources-add-form
-          :agent="agent"
           @add="addResources"
           @close="closeAddRes">
         </resources-add-form>
         <span slot="reference" class="resources__add-icon"
-          @click="showAddResources(agent)">
+          @click="showAddResources()">
           <i class="icon-plus"></i>
         </span>
       </el-popover>
       <span class="hidden-md-and-up resources__add-icon"
-        @click="showAddResDlg(agent)">
+        @click="showAddResDlg()">
         <i class="icon-plus"></i>
       </span>
-      <div class="resources__add-container" v-show="agent.isAddResDlgShow">
+      <div class="resources__add-container" v-show="isAddResDlgShow">
         <div class="resources__add-dlg">
           <resources-add-form
-            :agent="agent"
             @add="addResources"
             @close="closeAddResDlg">
           </resources-add-form>
@@ -30,10 +28,10 @@
       </div>
     </el-col>
     <el-col :sm="22" :xs="21">
-      <span v-for="(resource, index) in agent.resources" :key="index"
+      <span v-for="(resource, index) in resources" :key="index"
         class="resources__item">
         {{ resource.name }}
-        <i class="icon-trash" @click="deleteResource(agent, index)"></i>
+        <i class="icon-trash" @click="deleteResource(index)"></i>
       </span>
     </el-col>
   </el-row>
@@ -42,7 +40,7 @@
 <script>
   /*
    * @component Resources
-   * @prop {Object} agent - The agent resources belong to
+   * @prop {Array} resources
    */
 
   import ResourcesAddForm from '@/components/agent-detail/resources-add-form.vue'
@@ -53,38 +51,51 @@
     components: { ResourcesAddForm },
 
     props: {
-      agent: {
-        type: Object,
-        validator: (agent) => {
-          return agent.hasOwnProperty('resources') &&
-            agent.resources instanceof Array
+      resources: {
+        type: Array,
+        validator: (resources) => {
+          let isValid = true
+          for (let resource of resources) {
+            if (!resource.hasOwnProperty('name')) {
+              isValid = false
+              break
+            }
+          }
+          return isValid
         }
       }
     },
 
+    data () {
+      return {
+        isAddResShow: false,
+        isAddResDlgShow: false
+      }
+    },
+
     methods: {
-      deleteResource (agent, resourceIndex) {
-        agent.resources.splice(resourceIndex, 1)
+      deleteResource (resourceIndex) {
+        this.resources.splice(resourceIndex, 1)
       },
-      showAddResources (agent) {
-        agent.isAddResShow = true
+      showAddResources () {
+        this.isAddResShow = true
       },
-      addResources (agent, resArray) {
+      addResources (resArray) {
         for (let resource of resArray) {
-          agent.resources.push({name: resource})
+          this.resources.push({name: resource})
         }
-        agent.isAddResShow = false
-        agent.isAddResDlgShow = false
+        this.isAddResShow = false
+        this.isAddResDlgShow = false
       },
-      closeAddRes (agent) {
-        agent.isAddResShow = false
+      closeAddRes () {
+        this.isAddResShow = false
       },
 
-      showAddResDlg (agent) {
-        agent.isAddResDlgShow = true
+      showAddResDlg () {
+        this.isAddResDlgShow = true
       },
-      closeAddResDlg (agent) {
-        agent.isAddResDlgShow = false
+      closeAddResDlg () {
+        this.isAddResDlgShow = false
       }
     }
   }
