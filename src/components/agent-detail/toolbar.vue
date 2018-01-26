@@ -60,6 +60,12 @@ export default {
 
     &__tab-item {
       width: 1 / 3 * 100%;
+      height: $toolbar-height !important;
+      line-height: $toolbar-height !important;
+    }
+    &__tab-item.is-active {
+      color: $light-blue !important;
+      border-bottom-color: $light-blue !important;
     }
 
     &__view-type {
@@ -71,10 +77,6 @@ export default {
 
 <style lang="scss">
 	.toolbar {
-	  .el-menu-item {
-	    height: 50px;
-	    line-height: 50px;
-	  }
 
 	  .el-menu-item.is-active {
 	    color: #409EFF;

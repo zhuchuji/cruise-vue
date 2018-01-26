@@ -5,6 +5,7 @@ A responsive dashboard for CI(Continuous Integration). It could be browsed on PC
 #### Done
 - responsive view(on pc HD, pc, tablet and smartphone)
 - sass refactor
+- test under chrome and IE10+
 
 #### Todo
 - browser compatibility(IE10+, chome, firefox, safari and other major browsers)
