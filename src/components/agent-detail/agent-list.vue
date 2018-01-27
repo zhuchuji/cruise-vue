@@ -187,6 +187,11 @@
       font-size: 14px;
     }
 
+    // hack to fit into one line in Safari
+    &__info.el-row {
+      display: block;
+    }
+
     &__info-icon {
       margin-right: 8px;
       font-size: 18px;
