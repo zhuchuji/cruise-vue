@@ -219,6 +219,11 @@
       line-height: 30px;
     }
 
+    // hack to fit into one line in Safari 10.0.3
+    &__resources.el-row:before {
+      display: block;
+    }
+
     &__deny-box {
       text-align: right;
     }

@@ -39,6 +39,12 @@ export default {
 <style lang="scss">
 	@import "~@/assets/styles/vars-mixins.scss";
 
+  // hack to make content display in one line in Safari 10.0.3
+  // do not know why yet
+  .toolbar__tool.el-row:before {
+    display: block;
+  }
+
   .toolbar {
     &__search, &__tool {
       display: flex;

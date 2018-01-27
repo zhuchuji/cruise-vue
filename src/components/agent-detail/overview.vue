@@ -47,10 +47,15 @@
     color: $text-color;
   }
 
+  // hack to make content display in one line in Safari 10.0.3
+  // do not know why yet
+  .overview.el-row:before {
+    display: block;
+  }
+
   .overview {
     display: flex;
     flex-flow: wrap;
-    align-content: 10px;
     margin-bottom: $row-margin-bottom;
 
     &__block {
@@ -81,12 +86,13 @@
       }
 
       &--statistic {
+        text-align: center;
+
         @include overview-block($text-color: #333);
         @include smartphone {
           margin-left: 0;
           margin-top: $row-margin-bottom;
         }
-        text-align: center;
       }
     }
 
