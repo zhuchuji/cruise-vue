@@ -78,10 +78,6 @@ export default {
 <style lang="scss">
 	.toolbar {
 
-	  .el-menu-item.is-active {
-	    color: #409EFF;
-	  }
-
 	  .el-input__inner {
 	    border-radius: 0;
 	    background-color: #efefef;

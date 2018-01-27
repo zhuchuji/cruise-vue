@@ -1,5 +1,5 @@
 <template>
-  <div class="agent-detail">
+  <div class="agent-list">
     <overview></overview>
     <toolbar></toolbar>
     <el-row class="agent" v-for="(agent, index) in agents" :key="agent.id">
@@ -60,7 +60,7 @@
   const suseImg = require('@/assets/images/suse.png')
 
   export default {
-    name: 'AgentDetail',
+    name: 'AgentList',
     components: { Overview, Toolbar, Resources },
 
     data () {

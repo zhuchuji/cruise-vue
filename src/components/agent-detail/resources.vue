@@ -1,6 +1,6 @@
 <template>
-  <el-row class="resources">
-    <el-col :sm="2" :xs="3">
+  <div class="resources">
+    <div class="resources__add">
       <el-popover
         class="hidden-sm-and-down"
         trigger="manual"
@@ -14,10 +14,6 @@
           <i class="icon-plus"></i>
         </span>
       </el-popover>
-      <span class="hidden-md-and-up resources__add-icon"
-        @click="showAddResDlg()">
-        <i class="icon-plus"></i>
-      </span>
       <div class="resources__add-container" v-show="isAddResDlgShow">
         <div class="resources__add-dlg">
           <resources-add-form
@@ -26,15 +22,19 @@
           </resources-add-form>
         </div>
       </div>
-    </el-col>
-    <el-col :sm="22" :xs="21">
+      <span class="hidden-md-and-up resources__add-icon"
+        @click="showAddResDlg()">
+        <i class="icon-plus"></i>
+      </span>
+    </div>
+    <div class="resources__list">
       <span v-for="(resource, index) in resources" :key="index"
         class="resources__item">
         {{ resource.name }}
         <i class="icon-trash" @click="deleteResource(index)"></i>
       </span>
-    </el-col>
-  </el-row>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -105,6 +105,15 @@
   @import "~@/assets/styles/vars-mixins.scss";
 
   .resources {
+    display: flex;
+
+    &__add {
+
+    }
+
+    &__list {
+
+    }
 
     &__add-icon {
       display: inline-block;

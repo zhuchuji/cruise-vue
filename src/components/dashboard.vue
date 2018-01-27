@@ -7,7 +7,7 @@
   		    <side-nav></side-nav>
         </el-col>
         <el-col :span="24" :md="19" class="dashboard__content">
-          <agent-detail></agent-detail>
+          <agent-list></agent-list>
         </el-col>
       </div>
     </el-row>
@@ -18,12 +18,12 @@
 <script>
   import Header from '@/components/common/header.vue'
   import SideNav from '@/components/common/side-nav.vue'
-  import AgentDetail from '@/components/agent-detail/agent-detail.vue'
+  import AgentList from '@/components/agent-detail/agent-list.vue'
   import Footer from '@/components/common/footer.vue'
 
   export default {
     name: 'Dashboard',
-    components: { Header, SideNav, AgentDetail, Footer }
+    components: { Header, SideNav, AgentList, Footer }
   }
 </script>
 
