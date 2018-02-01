@@ -6,19 +6,19 @@
         trigger="manual"
         v-model="isAddResShow">
         <resources-add-form
-          @add="addResources"
-          @close="closeAddRes">
+          @add="addRes"
+          @close="hideAddRes">
         </resources-add-form>
         <span slot="reference" class="resources__add-icon"
-          @click="showAddResources()">
+          @click="showAddRes()">
           <i class="icon-plus"></i>
         </span>
       </el-popover>
       <div class="resources__add-container" v-show="isAddResDlgShow">
         <div class="resources__add-dlg">
           <resources-add-form
-            @add="addResources"
-            @close="closeAddResDlg">
+            @add="addRes"
+            @close="hideAddResDlg">
           </resources-add-form>
         </div>
       </div>
@@ -77,24 +77,24 @@
       deleteResource (resourceIndex) {
         this.resources.splice(resourceIndex, 1)
       },
-      showAddResources () {
+      showAddRes () {
         this.isAddResShow = true
       },
-      addResources (resArray) {
+      addRes (resArray) {
         for (let resource of resArray) {
           this.resources.push({name: resource})
         }
         this.isAddResShow = false
         this.isAddResDlgShow = false
       },
-      closeAddRes () {
+      hideAddRes () {
         this.isAddResShow = false
       },
 
       showAddResDlg () {
         this.isAddResDlgShow = true
       },
-      closeAddResDlg () {
+      hideAddResDlg () {
         this.isAddResDlgShow = false
       }
     }

@@ -5,6 +5,8 @@
 
 var webpackConfig = require('../../build/webpack.test.conf')
 
+var isSingleRun = process.env.npm_config_watch ? false : true
+
 module.exports = function (config) {
   config.set({
     // to run in additional browsers:
@@ -22,6 +24,7 @@ module.exports = function (config) {
     webpackMiddleware: {
       noInfo: true
     },
+    singleRun: isSingleRun,
     coverageReporter: {
       dir: './coverage',
       reporters: [
