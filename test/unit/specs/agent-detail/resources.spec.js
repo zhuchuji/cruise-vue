@@ -1,22 +1,17 @@
-import Vue from 'vue'
 import Resources from '@/components/agent-detail/resources.vue'
 import { expect } from 'chai'
-
-function createComponent (component, propsData) {
-  const constructor = Vue.extend(component)
-  const newComponent = new constructor({ propsData: propsData })
-  return newComponent
-}
+import { createComponent } from 'test/unit/specs/util.js'
 
 describe('Resources', () => {
-  it ('should pass in an array to props', () => {
+  it('should pass in an array to props', () => {
     let resourcesComp = createComponent(Resources, {resources: [{name: 'chrome'}]})
     expect(resourcesComp.resources).to.deep.equal([{name: 'chrome'}])
   })
 
-  it ('should throw error if passing in anything else than array', () => {
-    let resourcesComp = createComponent(Resources, {resources: {}})
-    expect(new Error()).to.throw(new Error())
+  it('should throw error if passing in anything else than array', () => {
+    let consoleLog = sinon.spy(console, 'error')
+    createComponent(Resources, {resources: {}})
+    expect(consoleLog.lastCall.args[0].toLowerCase()).to.include('invalid prop')
   })
 
   it('should delete one resource', () => {

@@ -1,6 +1,8 @@
 import Vue from 'vue'
+import ElementUI from 'element-ui'
 
 Vue.config.productionTip = false
+Vue.use(ElementUI)
 
 // require all test files (files that ends with .spec.js)
 const testsContext = require.context('./specs', true, /\.spec$/)

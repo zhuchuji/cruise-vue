@@ -5,11 +5,17 @@ const utils = require('./utils')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
+const path = require('path')
 
 const webpackConfig = merge(baseWebpackConfig, {
   // use inline sourcemap for karma-sourcemap-loader
   module: {
     rules: utils.styleLoaders()
+  },
+  resolve: {
+    alias: {
+      'test': path.resolve('test')
+    }
   },
   devtool: '#inline-source-map',
   resolveLoader: {
