@@ -1,58 +1,105 @@
 import Resources from '@/components/agent-detail/resources.vue'
-import { expect } from 'chai'
 import { createComponent } from 'test/unit/specs/util.js'
 
 describe('Resources', () => {
-  it('should pass in an array to props', () => {
-    let resourcesComp = createComponent(Resources, {resources: [{name: 'chrome'}]})
-    expect(resourcesComp.resources).to.deep.equal([{name: 'chrome'}])
+  describe('props', () => {
+    let vm
+
+    describe('resources', () => {
+      it('should validate [] to true', () => {
+        vm = createComponent(Resources, { resources: [] })
+        expect(vm.resources).to.deep.equal([])
+      })
+
+      it('should validate [{name: "chrome"}] to true', () => {
+        vm = createComponent(Resources, { resources: [{name: 'chrome'}] })
+        expect(vm.resources).to.deep.equal([{name: 'chrome'}])
+      })
+
+      describe('exceptions', () => {
+        let consoleError
+
+        before(() => {
+          consoleError = sinon.spy(console, 'error')
+        })
+
+        it('should validate {} to false', () => {
+          vm = createComponent(Resources, { resources: {} })
+          expect(consoleError.lastCall.args[0]).to.include('Invalid prop')
+        })
+
+        it('should validate [{}] to false', () => {
+          vm = createComponent(Resources, { resources: [{}] })
+          expect(consoleError.lastCall.args[0]).to.include('Invalid prop')
+        })
+      })
+    })
   })
 
-  it('should throw error if passing in anything else than array', () => {
-    let consoleLog = sinon.spy(console, 'error')
-    createComponent(Resources, {resources: {}})
-    expect(consoleLog.lastCall.args[0].toLowerCase()).to.include('invalid prop')
+  describe('methods', () => {
+    describe('delete', () => {
+      let resources, vm
+
+      beforeEach(() => {
+        resources = [{name: 'chrome'}]
+        vm = createComponent(Resources, {resources: resources})
+      })
+
+      it('should delete one resource if pos < length', () => {
+        vm.deleteResource(0)
+        expect(vm.resources).to.deep.equal([])
+      })
+
+      it('should do nothing if pos >= length', () => {
+        vm.deleteResource(1)
+        expect(vm.resources).to.deep.equal(resources)
+      })
+    })
   })
 
-  it('should delete one resource', () => {
-    let resourcesComp = createComponent(Resources, {resources: [{name: 'chrome'}]})
-    resourcesComp.deleteResource(0)
-    expect(resourcesComp.resources).to.deep.equal([])
+  describe('showAddRes', () => {
+    it('should set isAddResShow to true', () => {
+      let vm = createComponent(Resources)
+      expect(vm.isAddResShow).to.equal(false)
+      vm.showAddRes()
+      expect(vm.isAddResShow).to.equal(true)
+    })
   })
 
-  it('should set isAddResShow to true', () => {
-    let resourcesComp = createComponent(Resources)
-    expect(resourcesComp.isAddResShow).to.equal(false)
-    resourcesComp.showAddRes()
-    expect(resourcesComp.isAddResShow).to.equal(true)
+  describe('addRes', () => {
+    it('should add resources', () => {
+      let vm = createComponent(Resources, {resources: []})
+      vm.addRes(['chrome'])
+      expect(vm.resources).to.deep.equal([{name: 'chrome'}])
+      expect(vm.isAddResShow).to.equal(false)
+      expect(vm.isAddResDlgShow).to.equal(false)
+    })
   })
 
-  it('should add resources', () => {
-    let resourcesComp = createComponent(Resources, {resources: []})
-    resourcesComp.addRes(['chrome'])
-    expect(resourcesComp.resources).to.deep.equal([{name: 'chrome'}])
-    expect(resourcesComp.isAddResShow).to.equal(false)
-    expect(resourcesComp.isAddResDlgShow).to.equal(false)
+  describe('hideAddRes', () => {
+    it('should set isAddResShow to false', () => {
+      let vm = createComponent(Resources)
+      vm.isAddResShow = true
+      vm.hideAddRes()
+      expect(vm.isAddResShow).to.equal(false)
+    })
   })
 
-  it('should set isAddResShow to false', () => {
-    let resourcesComp = createComponent(Resources)
-    resourcesComp.isAddResShow = true
-    resourcesComp.hideAddRes()
-    expect(resourcesComp.isAddResShow).to.equal(false)
+  describe('showAddResDlg', () => {
+    it('should set isAddResDlgShow to true', () => {
+      let vm = createComponent(Resources)
+      expect(vm.isAddResDlgShow).to.equal(false)
+      vm.showAddResDlg()
+      expect(vm.isAddResDlgShow).to.equal(true)
+    })
   })
 
-  it('should set isAddResDlgShow to true', () => {
-    let resourcesComp = createComponent(Resources)
-    expect(resourcesComp.isAddResDlgShow).to.equal(false)
-    resourcesComp.showAddResDlg()
-    expect(resourcesComp.isAddResDlgShow).to.equal(true)
-  })
-
-  it('should set isAddResDlgShow to false', () => {
-    let resourcesComp = createComponent(Resources)
-    resourcesComp.isAddResDlgShow = true
-    resourcesComp.hideAddResDlg()
-    expect(resourcesComp.isAddResDlgShow).to.equal(false)
+  describe('hideAddResDlg', () => {
+    it('should set isAddResDlgShow to false', () => {
+      let vm = createComponent(Resources)
+      vm.isAddResDlgShow = true
+      vm.hideAddResDlg()
+      expect(vm.isAddResDlgShow).to.equal(false)
+    })
   })
 })

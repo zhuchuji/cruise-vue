@@ -36,8 +36,8 @@
         let resArray = this.resources.split(',').filter((resource) => {
           return resource !== ''
         })
-        for (let resource of resArray) {
-          resource = resource.trim()
+        for (let i = 0; i < resArray.length; i++) {
+          resArray[i] = resArray[i].trim()
         }
         this.$emit('add', resArray)
       },

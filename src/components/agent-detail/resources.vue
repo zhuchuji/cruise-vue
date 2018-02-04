@@ -75,7 +75,9 @@
 
     methods: {
       deleteResource (resourceIndex) {
-        this.resources.splice(resourceIndex, 1)
+        if (resourceIndex < this.resources.length) {
+          this.resources.splice(resourceIndex, 1)
+        }
       },
       showAddRes () {
         this.isAddResShow = true

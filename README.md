@@ -6,9 +6,9 @@ A responsive dashboard for CI(Continuous Integration). It could be browsed on PC
 - responsive view(on pc HD, pc, tablet and smartphone)
 - sass refactor
 - test under chrome 63, IE10+, firefox 53 & 57 and safari 10.0.3
+- unit test
 
 #### Todo
-- unit test
 - basic UI implementation, e.g, navbar, nav-tabs, popover
 
 ## Issue

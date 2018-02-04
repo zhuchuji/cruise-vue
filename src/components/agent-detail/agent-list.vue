@@ -123,9 +123,7 @@
             resources: [{name: 'Firefox'}, {name: 'Safari'},
               {name: 'Ubuntu'}, {name: 'Chrome'}]
           }
-        ],
-        isAddResShow: false,
-        resources: ''
+        ]
       }
     },
 
