@@ -20,7 +20,7 @@
             </span>
           </el-col>
           <el-col :span="5" :sm="5" :xs="24">
-            <i class="icon-info  agent__info-icon"></i>
+            <i class="agent__info-icon"></i>
             <span>{{ agent.ip }}</span>
           </el-col>
           <el-col :span="7" :sm="7" :xs="24">

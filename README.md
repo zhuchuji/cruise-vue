@@ -10,6 +10,7 @@ A responsive dashboard for CI(Continuous Integration). It could be browsed on PC
 
 #### Todo
 - basic UI implementation, e.g, navbar, nav-tabs, popover
+- bundle analysis and optimization
 
 ## Issue
 - webpack-dev-server prone error when developing in IE11, error: "Invalid character" on app.js function: eval("....").
