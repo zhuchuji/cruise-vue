@@ -7,14 +7,13 @@ A responsive dashboard for CI(Continuous Integration). It could be browsed on PC
 - sass refactor
 - test under chrome 63, IE10+, firefox 53 & 57 and safari 10.0.3
 - unit test
+- bundle analysis and optimization
 
 #### Todo
 - basic UI implementation, e.g, navbar, nav-tabs, popover
-- bundle analysis and optimization
 
 ## Issue
 - webpack-dev-server prone error when developing in IE11, error: "Invalid character" on app.js function: eval("....").
-- webpack-dev-server prone error in Safari 10.0.3, error: "ReferenceError: Can't find variable: overlayDiv". The page will be display normally but could not auto-refresh.
 
 ## Preview
 ![PC-HD-1200](./preview/PC-HD-1200.png)
