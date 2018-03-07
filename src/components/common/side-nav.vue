@@ -22,7 +22,7 @@
         <span>HELP</span>
       </el-menu-item>
     </el-menu>
-    <div class="sidenav__history">
+    <div class="sidenav__history hidden-sm-and-down">
       <h3>History</h3>
       <ul class="sidenav__list">
         <li v-for="record in history" class="sidenav__list-item">
