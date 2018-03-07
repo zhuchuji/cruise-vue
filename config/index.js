@@ -56,7 +56,7 @@ module.exports = {
     // Paths
     assetsRoot: process.env.npm_config_docs? path.resolve('docs') : path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '',
 
     /**
      * Source Maps
