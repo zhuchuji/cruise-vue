@@ -1,5 +1,5 @@
 # Cruise
-A responsive dashboard for CI(Continuous Integration). It could be browsed on PC, tablet and smartphone.
+A responsive dashboard for CI(Continuous Integration). It could be viewed on PC, tablet and smartphone.
 
 ## Progress
 #### Done
@@ -35,6 +35,9 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
+
+# build for github pages
+npm run build --docs
 
 # run unit tests
 npm run unit
