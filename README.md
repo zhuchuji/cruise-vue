@@ -1,27 +1,29 @@
 # Cruise
-A responsive dashboard for CI(Continuous Integration). It could be viewed on PC, tablet and smartphone.
+A responsive dashboard for CI(Continuous Integration). It could be viewed on smartphone, tablet and desktop.
 
-## Progress
-#### Done
-- responsive view(on pc HD, pc, tablet and smartphone)
-- sass refactor
-- test under chrome 63, IE10+, firefox 53 & 57 and safari 10.0.3
-- unit test
-- bundle analysis and optimization
+## Quick Start
+``` bash
+# clone repository
+git clone https://github.com/zhuchuji/cruise-vue.git
 
-#### Todo
-- basic UI implementation, e.g, navbar, nav-tabs, popover
+# install dependencies
+npm install
 
-## Issue
-- webpack-dev-server prone error when developing in IE11, error: "Invalid character" on app.js function: eval("....").
+# serve pages
+npm run dev
+```
 
-## Preview
-![PC-HD-1200](./preview/PC-HD-1200.png)
-![PC-1024](./preview/PC-1024.png)
-![table-768](./preview/tablet-768.png)
-![smartphone-320](./preview/smartphone-320.png)
+## Status
 
-## Build Setup
+## Todo
+- [x] Responsive view(smartphone, tablet, desktop and desktop HD)
+- [x] Sass refactor
+- [x] Cross-browser test(under Chrome 63, IE 10+, Firefox 57 and Safari 10.0.3)
+- [x] Unit test
+- [x] Bundle analysis and optimization
+- [ ] Basic UI widgets implementation, e.g, navbar, nav-tabs, popover
+
+## Development
 
 ``` bash
 # install dependencies
@@ -48,3 +50,7 @@ npm run e2e
 # run all tests
 npm test
 ```
+
+## Contribution
+
+## License
